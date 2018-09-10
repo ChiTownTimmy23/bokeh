@@ -11,7 +11,6 @@ sinon = require 'sinon'
 {Viridis} = require("api/palettes")
 {Plot} = require("models/plots/plot")
 {Range1d} = require("models/ranges/range1d")
-{Document} = require "document"
 bokeh_text  = require("core/util/text")
 
 describe "ColorBar module", ->
@@ -77,8 +76,6 @@ describe "ColorBar module", ->
         describe "ColorBar.orientation = 'vertical' in plot frame", ->
 
           beforeEach ->
-            document = new Document()
-            document.add_root(@plot)
             @plot.add_layout(@color_bar)
 
           it "Should use set `width` and `height` if set", ->
@@ -114,8 +111,6 @@ describe "ColorBar module", ->
         describe "ColorBar.orientation = 'vertical' in side frame", ->
 
           beforeEach ->
-            document = new Document()
-            document.add_root(@plot)
             @plot.add_layout(@color_bar, 'right')
 
           it "Should return height = plot.height - 2 * padding for any palette in side panel", ->
@@ -131,8 +126,6 @@ describe "ColorBar module", ->
         describe "ColorBar.orientation = 'horizontal'", ->
 
           beforeEach ->
-            document = new Document()
-            document.add_root(@plot)
             @color_bar.orientation = 'horizontal'
             @plot.add_layout(@color_bar)
 
@@ -170,8 +163,6 @@ describe "ColorBar module", ->
         describe "ColorBar.orientation = 'horizontal' in side frame", ->
 
           beforeEach ->
-            document = new Document()
-            document.add_root(@plot)
             @color_bar.orientation = 'horizontal'
             @plot.add_layout(@color_bar, 'below')
 
@@ -187,8 +178,6 @@ describe "ColorBar module", ->
     describe "ColorBar.tick_info method", ->
 
       beforeEach ->
-        document = new Document()
-        document.add_root(@plot)
         @plot.add_layout(@color_bar)
         @lin_expected = new Float64Array([0, 20, 40, 60, 80, 100])
         @log_expected = new Float64Array([0, 76.70099985546604, 86.73533304426542, 92.60504167945479, 96.76966623306478, 100])
@@ -252,9 +241,6 @@ describe "ColorBar module", ->
       @_set_canvas_image_stub.restore()
 
     beforeEach ->
-      document = new Document()
-      document.add_root(@plot)
-
       @_set_canvas_image_stub = sinon.stub(ColorBarView.prototype, '_set_canvas_image')
 
       @color_bar.color_mapper = new LinearColorMapper({low: 0, high: 10, palette: Viridis.Viridis10})
